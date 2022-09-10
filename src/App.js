@@ -1,5 +1,7 @@
+// Importamos los componentes que queremos utilizar
+
 function App() {
-	return <div className="App"></div>;
+	return <div></div>;
 }
 
 export default App;
