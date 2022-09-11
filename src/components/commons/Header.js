@@ -1,11 +1,13 @@
+import { Link } from "react-router-dom";
+
 // Se crea una constante con el nombre del archivo y adentro se pone el componente
 const Header = () => {
 	return (
 		<div className="navbar is-primary">
 			<div className="navbar-brand">
-				<a href="/#" className="navbar-item">
+				<Link to={"/"} className="navbar-item">
 					<img src="logo.png" alt="Logo" />
-				</a>
+				</Link>
 			</div>
 		</div>
 	);

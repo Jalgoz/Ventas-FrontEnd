@@ -1,7 +1,7 @@
 import Header from "./Header";
 import Menu from "./Menu";
 
-const Layout = () => {
+const Layout = props => {
 	return (
 		<div>
 			<Header />
@@ -10,12 +10,7 @@ const Layout = () => {
 					<div className="column is-one-quarter">
 						<Menu />
 					</div>
-					<div className="column">
-						<p>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet,
-							quis.
-						</p>
-					</div>
+					<div className="column">{props.children}</div>
 				</div>
 			</div>
 		</div>
