@@ -1,4 +1,5 @@
 import { useState } from "react";
+import FilaCliente from "./FilaCliente";
 
 const TablaClientes = () => {
 	const [listaClientes, setListaClientes] = useState([
@@ -36,26 +37,7 @@ const TablaClientes = () => {
 
 				<tbody>
 					{listaClientes.map(cliente => (
-						<tr key={cliente.idCliente}>
-							<td>
-								<button className="button is-info mr-1" title="Modificar">
-									<span className="icon is-small">
-										<i className="fas fa-edit"></i>
-									</span>
-								</button>
-
-								<button className="button is-danger" title="Eliminar">
-									<span className="icon is-small">
-										<i className="fas fa-trash-alt"></i>
-									</span>
-								</button>
-							</td>
-							<td>{cliente.nombre}</td>
-							<td>{cliente.apellidos}</td>
-							<td>{cliente.direccion}</td>
-							<td>{cliente.telefono}</td>
-							<td>{cliente.email}</td>
-						</tr>
+						<FilaCliente cliente={cliente} key={cliente.idCliente} />
 					))}
 				</tbody>
 			</table>

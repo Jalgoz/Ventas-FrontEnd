@@ -1,19 +1,22 @@
+import { ModalContextProvider } from "../../context/modal/ModalContext";
 import Header from "./Header";
 import Menu from "./Menu";
 
 const Layout = props => {
 	return (
-		<div>
-			<Header />
-			<div className="container">
-				<div className="columns">
-					<div className="column is-one-quarter">
-						<Menu />
+		<ModalContextProvider>
+			<div>
+				<Header />
+				<div className="container">
+					<div className="columns">
+						<div className="column is-one-quarter">
+							<Menu />
+						</div>
+						<div className="column">{props.children}</div>
 					</div>
-					<div className="column">{props.children}</div>
 				</div>
 			</div>
-		</div>
+		</ModalContextProvider>
 	);
 };
 

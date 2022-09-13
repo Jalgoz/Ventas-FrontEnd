@@ -1,5 +1,7 @@
 import TablaClientes from "../components/clientes/TablaClientes";
+import ToolbarCliente from "../components/clientes/ToolbarCliente";
 import Layout from "../components/commons/Layout";
+import Modal from "../components/commons/Modal";
 
 const Clientes = () => {
 	return (
@@ -8,19 +10,12 @@ const Clientes = () => {
 				<div className="panel-heading">Clientes</div>
 
 				<div className="box">
-					<div className="container">
-						<button className="button is-small is-primary">
-							<span className="icon is-small">
-								<i className="fas fa-plus"></i>
-							</span>
-
-							<span>Registrar nuevo cliente</span>
-						</button>
-					</div>
-
+					<ToolbarCliente />
 					<TablaClientes />
 				</div>
 			</div>
+
+			<Modal />
 		</Layout>
 	);
 };

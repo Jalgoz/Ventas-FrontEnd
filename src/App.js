@@ -4,6 +4,7 @@ import "bulma/css/bulma.css";
 // Importamos fontawesome
 import "@fortawesome/fontawesome-free/js/all";
 import Home from "./pages/Home";
+
 import Clientes from "./pages/Clientes";
 
 // Importamos los componentes que queremos utilizar
