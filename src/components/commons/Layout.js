@@ -1,4 +1,4 @@
-import { ModalContextProvider } from "../../context/modal/ModalContext";
+import { ModalContextProvider } from "../../context/ModalContext";
 import Header from "./Header";
 import Menu from "./Menu";
 

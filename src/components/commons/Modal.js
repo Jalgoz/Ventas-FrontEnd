@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { ModalContext } from "../../context/modal/ModalContext";
+import { ModalContext } from "../../context/ModalContext";
 
 const Modal = props => {
 	const { mostrarModal, tituloModal, setMostrarModal, setTituloModal } =
@@ -23,7 +23,7 @@ const Modal = props => {
 					></button>
 				</header>
 
-				<section className="modal-card-body">Contenido</section>
+				<section className="modal-card-body">{props.children}</section>
 			</div>
 		</div>
 	);

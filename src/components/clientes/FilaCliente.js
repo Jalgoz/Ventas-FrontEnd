@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { ModalContext } from "../../context/modal/ModalContext";
+import { ModalContext } from "../../context/ModalContext";
 
 const FilaCliente = ({ cliente }) => {
 	const { setMostrarModal, setTituloModal } = useContext(ModalContext);

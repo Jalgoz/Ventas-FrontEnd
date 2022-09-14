@@ -1,3 +1,4 @@
+import FormularioCliente from "../components/clientes/FormularioCliente";
 import TablaClientes from "../components/clientes/TablaClientes";
 import ToolbarCliente from "../components/clientes/ToolbarCliente";
 import Layout from "../components/commons/Layout";
@@ -15,7 +16,9 @@ const Clientes = () => {
 				</div>
 			</div>
 
-			<Modal />
+			<Modal>
+				<FormularioCliente />
+			</Modal>
 		</Layout>
 	);
 };
