@@ -4,15 +4,16 @@ import FilaCliente from "./FilaCliente";
 
 const TablaClientes = () => {
 	// Le decimos que usaremos ClienteContext
-	const { listaClientes, obtenerClientes } = useContext(ClienteContext);
+	const { clientesLista, obtenerClientes } = useContext(ClienteContext);
 
-	// Se harán cambios el la tabla cuando se hagan cambios
+	// Se harán cambios el la tabla cada vez que se renderize
 	useEffect(() => {
 		obtenerClientes();
+		// eslint-disable-next-line
 	}, []);
 
-	// No se pude poner listaClientes.legth por que lo reconoce como undefined
-	if (listaClientes?.length === 0)
+	// No se pude poner clientesLista.legth por que lo reconoce como undefined
+	if (clientesLista?.length === 0)
 		return (
 			<center>
 				<p>No existen clientes.</p>
@@ -35,7 +36,7 @@ const TablaClientes = () => {
 
 				<tbody>
 					{/* Se debe agregar el signo de interrogación por que detecta el listaCliente como undefined mas info: https://www.webtips.dev/solutions/fix-cannot-read-properties-of-undefined-reading-map */}
-					{listaClientes?.map(cliente => (
+					{clientesLista?.map(cliente => (
 						// Recorre todos los elementos que existan y crea las filas necesarias
 						<FilaCliente cliente={cliente} key={cliente.idCliente} />
 					))}

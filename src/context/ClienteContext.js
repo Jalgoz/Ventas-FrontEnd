@@ -1,12 +1,54 @@
 import { createContext, useReducer } from "react";
 import ClienteReducer from "../reducer/ClienteReducer";
-import { OBTENER_CLIENTES } from "../const/TiposDeAcciones";
+import {
+	OBTENER_CLIENTE,
+	REGISTRAR_CLIENTE,
+	OBTENER_CLIENTES,
+	MODIFICAR_CLIENTE,
+	ELIMINAR_CLIENTE,
+} from "../const/TiposDeAcciones";
+import { v4 as uuidv4 } from "uuid";
 
 export const ClienteContext = createContext();
 
 export const ClienteContextProvider = props => {
 	const initialState = {
-		listaClientes: [],
+		clientesLista: [],
+		clienteActual: null,
+	};
+
+	// Se encarga de enviar el dispatch con el tipo de acción y el nuevo cliente
+	const registrarCliente = cliente => {
+		let clienteNuevo = {
+			...cliente,
+			idCliente: uuidv4(),
+		};
+
+		dispatch({
+			type: REGISTRAR_CLIENTE,
+			payload: clienteNuevo,
+		});
+	};
+
+	const obtenerCliente = cliente => {
+		dispatch({
+			type: OBTENER_CLIENTE,
+			payload: cliente,
+		});
+	};
+
+	const actualizarCliente = cliente => {
+		dispatch({
+			type: MODIFICAR_CLIENTE,
+			payload: cliente,
+		});
+	};
+
+	const eliminarCliente = idCliente => {
+		dispatch({
+			type: ELIMINAR_CLIENTE,
+			payload: idCliente,
+		});
 	};
 
 	// Obtendremos un state y un método dispatch
@@ -42,8 +84,13 @@ export const ClienteContextProvider = props => {
 	return (
 		<ClienteContext.Provider
 			value={{
-				listaClientes: state.clienteLista, // Estos nombres deben ser iguales que en tablaCliente.js
+				clientesLista: state.clienteLista, // Estos nombres deben ser iguales que en tablaCliente.js
+				clienteActual: state.clienteActual,
 				obtenerClientes,
+				registrarCliente,
+				obtenerCliente,
+				actualizarCliente,
+				eliminarCliente,
 			}}
 		>
 			{props.children}
@@ -52,7 +99,7 @@ export const ClienteContextProvider = props => {
 };
 
 /* 
-const [listaClientes, setListaClientes] = useState([
+const [clientesLista, setclientesLista] = useState([
 		{
 			idCliente: 0,
 			nombre: "Seth",

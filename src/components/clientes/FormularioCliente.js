@@ -1,9 +1,14 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
+import { ClienteContext } from "../../context/ClienteContext";
 import { ModalContext } from "../../context/ModalContext";
 
 const FormularioCliente = () => {
 	// Para poder cerrar el modal
 	const { setMostrarModal } = useContext(ModalContext);
+
+	// Para poder registrar y modificar a los clientes
+	const { registrarCliente, clienteActual, obtenerCliente, actualizarCliente } =
+		useContext(ClienteContext);
 
 	// Cambiamos los datos del cliente, para que nos quede en el formato de clienteDefault
 	const handleChange = e => {
@@ -21,11 +26,22 @@ const FormularioCliente = () => {
 		email: "",
 	};
 
-	// Para que el cliente sea un estado
+	// Para que el cliente sea un estado local
 	const [cliente, setCliente] = useState(clienteDefault);
 
 	// Agregamos un estado para saber si existe algún error al enviar el formulario
 	const [mensaje, setMensaje] = useState(null);
+
+	useEffect(() => {
+		if (clienteActual !== null)
+			setCliente({
+				...clienteActual,
+				direccion: clienteActual.direccion ? clienteActual.direccion : "",
+				telefono: clienteActual.telefono ? clienteActual.telefono : "",
+			});
+		else setCliente(clienteDefault);
+		// eslint-disable-next-line
+	}, [clienteActual]);
 
 	// Controlamos que se hará al momento de hacer click en enviar o guardar
 	const handleOnSubmit = e => {
@@ -41,7 +57,11 @@ const FormularioCliente = () => {
 			return;
 		}
 		// Obtener objeto a enviar
-		console.log(obtenerClienteAEnviar());
+		if (clienteActual !== null) {
+			actualizarCliente(obtenerClienteAEnviar());
+		} else {
+			registrarCliente(obtenerClienteAEnviar());
+		}
 
 		// Cerrar y limpiar el modal
 		cerrarModal();
@@ -56,6 +76,7 @@ const FormularioCliente = () => {
 	const cerrarModal = () => {
 		limpiarForm();
 		setMostrarModal(false);
+		obtenerCliente(null);
 	};
 
 	// Para obtener solo los datos que contengan valor
