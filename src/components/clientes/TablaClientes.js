@@ -12,7 +12,7 @@ const TablaClientes = () => {
 		// eslint-disable-next-line
 	}, []);
 
-	// No se pude poner clientesLista.legth por que lo reconoce como undefined
+	// No se pude poner clientesLista.length por que lo reconoce como undefined
 	if (clientesLista?.length === 0)
 		return (
 			<center>

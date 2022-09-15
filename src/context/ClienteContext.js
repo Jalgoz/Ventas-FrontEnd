@@ -7,7 +7,7 @@ import {
 	MODIFICAR_CLIENTE,
 	ELIMINAR_CLIENTE,
 } from "../const/TiposDeAcciones";
-import { v4 as uuidv4 } from "uuid";
+import Axios from "axios";
 
 export const ClienteContext = createContext();
 
@@ -18,67 +18,80 @@ export const ClienteContextProvider = props => {
 	};
 
 	// Se encarga de enviar el dispatch con el tipo de acción y el nuevo cliente
-	const registrarCliente = cliente => {
-		let clienteNuevo = {
-			...cliente,
-			idCliente: uuidv4(),
-		};
+	const registrarCliente = async cliente => {
+		try {
+			const resultado = await Axios.post("/clientes", cliente);
 
-		dispatch({
-			type: REGISTRAR_CLIENTE,
-			payload: clienteNuevo,
-		});
+			dispatch({
+				type: REGISTRAR_CLIENTE,
+				payload: resultado.data, // es .data debido que ahí se encuentra todos los datos del cliente sino hacer un console.log(resultado)
+			});
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
-	const obtenerCliente = cliente => {
-		dispatch({
-			type: OBTENER_CLIENTE,
-			payload: cliente,
-		});
+	const obtenerCliente = async cliente => {
+		try {
+			let clienteEncontrado = null;
+			if (cliente !== null) {
+				// console.log(cliente.idCliente);
+				const resultado = await Axios.get(`/clientes/${cliente.idCliente}`);
+				clienteEncontrado = resultado.data; // es .data debido que ahí se encuentra todos los datos del cliente sino hacer un console.log(resultado)
+			}
+
+			dispatch({
+				type: OBTENER_CLIENTE,
+				payload: clienteEncontrado,
+			});
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
-	const actualizarCliente = cliente => {
-		dispatch({
-			type: MODIFICAR_CLIENTE,
-			payload: cliente,
-		});
+	const actualizarCliente = async cliente => {
+		try {
+			const resultado = await Axios.put("/clientes", cliente);
+
+			dispatch({
+				type: MODIFICAR_CLIENTE,
+				payload: resultado.data,
+			});
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
-	const eliminarCliente = idCliente => {
-		dispatch({
-			type: ELIMINAR_CLIENTE,
-			payload: idCliente,
-		});
+	const eliminarCliente = async idCliente => {
+		try {
+			await Axios.delete(`/clientes/${idCliente}`);
+
+			dispatch({
+				type: ELIMINAR_CLIENTE,
+				payload: idCliente,
+			});
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	// Obtendremos un state y un método dispatch
 	const [state, dispatch] = useReducer(ClienteReducer, initialState);
 
-	const obtenerClientes = () => {
-		const clientes = [
-			{
-				idCliente: 0,
-				nombre: "Seth",
-				apellidos: "Lozada Gómez",
-				direccion: "Irpavi",
-				telefono: "",
-				email: "sethsillo@gmail.com",
-			},
-			{
-				idCliente: 1,
-				nombre: "Isis",
-				apellidos: "Lozada Gómez",
-				direccion: "Irpavi",
-				telefono: "",
-				email: "isis00@gmail.com",
-			},
-		];
+	// Le decimos que será una función asincrona
+	const obtenerClientes = async () => {
+		try {
+			// Para obtener los clientes de la DB
+			const resultado = await Axios.get("/clientes"); // await para que primero termine de ejecutarse esta linea para seguir adelante
 
-		// Este código manda a clienteReducer.js
-		dispatch({
-			type: OBTENER_CLIENTES,
-			payload: clientes,
-		});
+			// Este código manda a clienteReducer.js
+			dispatch({
+				type: OBTENER_CLIENTES,
+				payload: resultado.data, // es .data debido que ahí se encuentra todos los datos del cliente sino hacer un console.log(resultado)
+			});
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	return (
