@@ -13,7 +13,7 @@ const TablaClientes = () => {
 	}, []);
 
 	// No se pude poner clientesLista.length por que lo reconoce como undefined
-	if (clientesLista?.length === 0)
+	if (!clientesLista)
 		return (
 			<center>
 				<p>No existen clientes.</p>

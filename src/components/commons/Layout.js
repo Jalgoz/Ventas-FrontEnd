@@ -7,7 +7,7 @@ const Layout = props => {
 		<ModalContextProvider>
 			<div>
 				<Header />
-				<div className="container">
+				<div className="container mt-4">
 					<div className="columns">
 						<div className="column is-one-quarter">
 							<Menu />

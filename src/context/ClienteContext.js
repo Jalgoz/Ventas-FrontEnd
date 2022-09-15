@@ -8,6 +8,7 @@ import {
 	ELIMINAR_CLIENTE,
 } from "../const/TiposDeAcciones";
 import Axios from "axios";
+import Swal from "sweetalert2";
 
 export const ClienteContext = createContext();
 
@@ -26,7 +27,21 @@ export const ClienteContextProvider = props => {
 				type: REGISTRAR_CLIENTE,
 				payload: resultado.data, // es .data debido que ahí se encuentra todos los datos del cliente sino hacer un console.log(resultado)
 			});
+
+			Swal.fire({
+				icon: "success",
+				title: "Correcto",
+				text: "Cliente registrado correctamente",
+				toast: false,
+			});
 		} catch (error) {
+			Swal.fire({
+				icon: "error",
+				title: "Error",
+				text: "No se logró registrar al cliente",
+				toast: true,
+			});
+
 			console.log(error);
 		}
 	};
@@ -45,6 +60,13 @@ export const ClienteContextProvider = props => {
 				payload: clienteEncontrado,
 			});
 		} catch (error) {
+			Swal.fire({
+				icon: "error",
+				title: "Error",
+				text: "No se logró obtener el cliente",
+				toast: true,
+			});
+
 			console.log(error);
 		}
 	};
@@ -57,20 +79,57 @@ export const ClienteContextProvider = props => {
 				type: MODIFICAR_CLIENTE,
 				payload: resultado.data,
 			});
+
+			Swal.fire({
+				icon: "success",
+				title: "Correcto",
+				text: "Cliente modificado correctamente",
+				toast: false,
+			});
 		} catch (error) {
+			Swal.fire({
+				icon: "error",
+				title: "Error",
+				text: "No se logró modificar el cliente",
+				toast: true,
+			});
+
 			console.log(error);
 		}
 	};
 
 	const eliminarCliente = async idCliente => {
 		try {
-			await Axios.delete(`/clientes/${idCliente}`);
+			Swal.fire({
+				title: "Desea eliminar un cliente?",
+				icon: "question",
+				showCancelButton: true,
+				confirmButtonText: "Si, eliminar",
+			}).then(async result => {
+				if (result.value) {
+					await Axios.delete(`/clientes/${idCliente}`);
 
-			dispatch({
-				type: ELIMINAR_CLIENTE,
-				payload: idCliente,
+					dispatch({
+						type: ELIMINAR_CLIENTE,
+						payload: idCliente,
+					});
+
+					Swal.fire({
+						icon: "success",
+						title: "Correcto",
+						text: "Cliente eliminado correctamente",
+						toast: false,
+					});
+				}
 			});
 		} catch (error) {
+			Swal.fire({
+				icon: "error",
+				title: "Error",
+				text: "No se logró eliminar el cliente",
+				toast: true,
+			});
+
 			console.log(error);
 		}
 	};
@@ -90,6 +149,12 @@ export const ClienteContextProvider = props => {
 				payload: resultado.data, // es .data debido que ahí se encuentra todos los datos del cliente sino hacer un console.log(resultado)
 			});
 		} catch (error) {
+			Swal.fire({
+				icon: "error",
+				title: "Error",
+				text: "No se logró obtener los clientes",
+				toast: true,
+			});
 			console.log(error);
 		}
 	};
